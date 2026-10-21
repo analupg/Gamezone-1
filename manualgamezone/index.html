@@ -1,0 +1,1525 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manual GameZone | Guia Técnico e do Usuário</title>
+
+    <meta name="description"
+        content="Manual técnico e guia do usuário do GameZone, desenvolvido com Flutter e Dart.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --rosa: #ff2d95;
+            --rosa-claro: #fff0f7;
+            --roxo: #8b35d1;
+            --texto: #35152f;
+            --texto-secundario: #85627f;
+            --branco: #ffffff;
+            --borda: #f7cce5;
+            --fundo: #fffafd;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            color: var(--texto);
+            background: var(--branco);
+            line-height: 1.7;
+        }
+
+        a {
+            color: var(--roxo);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--rosa);
+        }
+
+        .cabecalho {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 12px max(5%, calc((100% - 1180px) / 2));
+            background: rgba(255, 255, 255, 0.97);
+            border-bottom: 1px solid #f8d8e9;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--texto);
+            font-size: 23px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .logo-icone {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            background: var(--rosa-claro);
+        }
+
+        .logo-destaque {
+            color: var(--rosa);
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .menu a {
+            color: var(--texto);
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .menu a:hover {
+            color: var(--rosa);
+        }
+
+        .menu-mobile {
+            display: none;
+            padding: 7px 12px;
+            border: 1px solid var(--borda);
+            border-radius: 10px;
+            background: var(--rosa-claro);
+            color: var(--texto);
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .capa {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            gap: 45px;
+            max-width: 1180px;
+            min-height: 570px;
+            margin: auto;
+            padding: 70px 25px;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            padding: 7px 14px;
+            border: 1px solid var(--borda);
+            border-radius: 30px;
+            color: var(--roxo);
+            background: var(--branco);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            margin: 22px 0;
+            font-size: clamp(34px, 5vw, 53px);
+            line-height: 1.2;
+            letter-spacing: -1.5px;
+        }
+
+        h1 span,
+        h2 span {
+            color: var(--rosa);
+        }
+
+        .capa-conteudo > p {
+            max-width: 600px;
+            color: var(--texto-secundario);
+            font-size: 15px;
+        }
+
+        .botoes-capa {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .botao {
+            display: inline-block;
+            padding: 12px 20px;
+            border: 1px solid var(--borda);
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .botao-principal {
+            border-color: var(--rosa);
+            background: var(--rosa);
+            color: white;
+        }
+
+        .botao-principal:hover {
+            background: var(--roxo);
+            color: white;
+        }
+
+        .botao-secundario {
+            color: var(--texto);
+            background: white;
+        }
+
+        .capa-informacoes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 35px;
+            margin-top: 35px;
+        }
+
+        .capa-informacoes div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .capa-informacoes strong {
+            font-size: 14px;
+        }
+
+        .capa-informacoes span {
+            color: var(--texto-secundario);
+            font-size: 12px;
+        }
+
+        .capa-visual {
+            position: relative;
+            display: grid;
+            place-items: center;
+            min-height: 350px;
+            border-radius: 35px;
+            background: linear-gradient(145deg, #fff0f7, #f5eaff);
+        }
+
+        .ilustracao-controle {
+            display: grid;
+            place-items: center;
+            width: 190px;
+            height: 190px;
+            border: 1px solid white;
+            border-radius: 45px;
+            background: white;
+            box-shadow: 0 20px 55px #d7a5d744;
+            font-size: 95px;
+            transform: rotate(-8deg);
+        }
+
+        .cartao-decorativo {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 260px;
+            padding: 14px 17px;
+            border: 1px solid #f8d8e9;
+            border-radius: 16px;
+            background: white;
+            box-shadow: 0 10px 30px #63304c0d;
+        }
+
+        .cartao-decorativo > span {
+            font-size: 25px;
+        }
+
+        .cartao-decorativo strong {
+            font-size: 12px;
+        }
+
+        .cartao-decorativo p {
+            color: var(--texto-secundario);
+            font-size: 10px;
+        }
+
+        .cartao-superior {
+            top: 35px;
+            left: -15px;
+        }
+
+        .cartao-inferior {
+            right: -15px;
+            bottom: 35px;
+        }
+
+        .secao {
+            padding: 80px 22px;
+        }
+
+        .secao-colorida {
+            background: var(--fundo);
+        }
+
+        .titulo-secao {
+            max-width: 720px;
+            margin: 0 auto 45px;
+            text-align: center;
+        }
+
+        .titulo-secao h2 {
+            margin: 15px 0 12px;
+            font-size: clamp(27px, 4vw, 38px);
+            line-height: 1.3;
+        }
+
+        .titulo-secao > p {
+            color: var(--texto-secundario);
+            font-size: 14px;
+        }
+
+        .cartoes {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .cartao {
+            padding: 27px;
+            border: 1px solid #f6d5e7;
+            border-radius: 20px;
+            background: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cartao:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px #5c17400b;
+        }
+
+        .cartao-icone {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            font-size: 23px;
+        }
+
+        .rosa {
+            background: #fff0f7;
+        }
+
+        .roxo {
+            background: #f3e8ff;
+        }
+
+        .cartao h3,
+        .tecnologia h3,
+        .passo h3 {
+            margin-bottom: 9px;
+            font-size: 17px;
+        }
+
+        .cartao p,
+        .tecnologia p,
+        .passo p {
+            color: var(--texto-secundario);
+            font-size: 13px;
+        }
+
+        .caixa-informativa {
+            display: flex;
+            align-items: flex-start;
+            gap: 22px;
+            max-width: 900px;
+            margin: 35px auto 0;
+            padding: 25px 28px;
+            border: 1px solid var(--borda);
+            border-radius: 20px;
+            background: white;
+        }
+
+        .caixa-icone {
+            font-size: 26px;
+        }
+
+        .caixa-informativa h3 {
+            margin-bottom: 7px;
+            font-size: 17px;
+        }
+
+        .caixa-informativa p {
+            color: var(--texto-secundario);
+            font-size: 13px;
+        }
+
+        .lista-tecnologias {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .tecnologia {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            padding: 25px;
+            border: 1px solid #f6d5e7;
+            border-radius: 18px;
+            background: white;
+        }
+
+        .tecnologia-icone {
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 15px;
+            background: var(--rosa-claro);
+            font-size: 23px;
+        }
+
+        .passos {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .passo {
+            display: flex;
+            gap: 18px;
+            padding: 24px;
+            border: 1px solid #f6d5e7;
+            border-radius: 18px;
+            background: white;
+        }
+
+        .numero-passo,
+        .codigo-numero {
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: var(--rosa-claro);
+            color: var(--roxo);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .aviso {
+            max-width: 1000px;
+            margin: 25px auto 0;
+            padding: 20px 24px;
+            border-left: 4px solid var(--rosa);
+            border-radius: 10px;
+            background: var(--rosa-claro);
+        }
+
+        .aviso p {
+            color: var(--texto-secundario);
+            font-size: 13px;
+        }
+
+        .bloco-codigo {
+            max-width: 900px;
+            margin: 35px auto 0;
+            overflow: hidden;
+            border: 1px solid #ead9ef;
+            border-radius: 18px;
+            background: #291a2c;
+        }
+
+        .codigo-cabecalho {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 15px 20px;
+            background: #35243a;
+            color: white;
+            font-size: 12px;
+        }
+
+        .bolinhas {
+            display: flex;
+            gap: 6px;
+        }
+
+        .bolinhas span {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #ff78b8;
+        }
+
+        .bolinhas span:nth-child(2) {
+            background: #d1a0ff;
+        }
+
+        .bolinhas span:nth-child(3) {
+            background: #f9c6df;
+        }
+
+        pre {
+            max-width: 100%;
+            overflow-x: auto;
+            padding: 24px;
+            background: #291a2c;
+            color: #ffe5f2;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            white-space: pre;
+        }
+
+        .bloco-codigo > p {
+            padding: 0 24px 22px;
+            background: #291a2c;
+            color: #e3c9df;
+            font-size: 12px;
+        }
+
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 22px;
+            max-width: 1050px;
+            margin: auto;
+        }
+
+        .imagem-cartao {
+            overflow: hidden;
+            border: 1px solid #f6d5e7;
+            border-radius: 18px;
+            background: white;
+        }
+
+        .imagem-reservada {
+            display: grid;
+            place-items: center;
+            min-height: 170px;
+            background: linear-gradient(145deg, #fff0f7, #f1e7ff);
+            font-size: 55px;
+        }
+
+        .imagem-cartao h3 {
+            padding: 18px 18px 3px;
+            font-size: 15px;
+        }
+
+        .imagem-cartao p {
+            padding: 0 18px 20px;
+            color: var(--texto-secundario);
+            font-size: 12px;
+        }
+
+        .observacao {
+            margin-top: 22px;
+            color: var(--texto-secundario);
+            text-align: center;
+            font-size: 12px;
+        }
+
+        /* SUPABASE */
+
+        .codigo-aula {
+            max-width: 900px;
+            margin: 0 auto 22px;
+            padding: 28px;
+            border: 1px solid var(--borda);
+            border-radius: 20px;
+            background: white;
+        }
+
+        .codigo-aula-topo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .codigo-aula-topo h3 {
+            font-size: 17px;
+            line-height: 1.5;
+        }
+
+        .codigo-aula-topo p {
+            margin-top: 3px;
+            color: var(--texto-secundario);
+            font-size: 12px;
+        }
+
+        .codigo-aula > p,
+        .codigo-aula li {
+            color: var(--texto-secundario);
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .codigo-aula > p {
+            margin: 12px 0;
+        }
+
+        .codigo-aula ol,
+        .codigo-aula ul {
+            padding-left: 23px;
+            margin: 12px 0;
+        }
+
+        .codigo-aula li {
+            padding-left: 4px;
+            margin-bottom: 5px;
+        }
+
+        .codigo-aula pre {
+            margin-top: 18px;
+            border-radius: 12px;
+        }
+
+        .codigo-aula pre code {
+            color: #ffe5f2;
+        }
+
+        .codigo-aula code:not(pre code),
+        .comando-linha code {
+            padding: 3px 6px;
+            border-radius: 5px;
+            background: #fff0f7;
+            color: #9d2678;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .tabela-responsiva {
+            width: 100%;
+            margin-top: 18px;
+            overflow-x: auto;
+            border: 1px solid #f5d6e8;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        thead {
+            background: #fff0f7;
+        }
+
+        th,
+        td {
+            padding: 13px 16px;
+            border-bottom: 1px solid #f5e4ee;
+            vertical-align: top;
+        }
+
+        th {
+            color: var(--texto);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        td {
+            color: var(--texto-secundario);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #fffafd;
+        }
+
+        .codigo-explicacao {
+            margin-top: 15px !important;
+            padding: 15px;
+            border-left: 3px solid var(--rosa);
+            border-radius: 7px;
+            background: #fff5fa;
+        }
+
+        .comando-linha {
+            margin: 16px 0;
+            padding: 18px;
+            overflow-x: auto;
+            border: 1px solid var(--borda);
+            border-radius: 12px;
+            background: #fffafd;
+        }
+
+        .rodape {
+            padding: 35px 20px;
+            border-top: 1px solid #f8d8e9;
+            background: white;
+            text-align: center;
+        }
+
+        .rodape .logo {
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .rodape p {
+            color: var(--texto-secundario);
+            font-size: 12px;
+        }
+
+        .rodape-final {
+            margin-top: 12px;
+        }
+
+        @media (max-width: 850px) {
+            .cabecalho {
+                flex-wrap: wrap;
+                padding: 10px 20px;
+            }
+
+            .menu-mobile {
+                display: block;
+            }
+
+            .menu {
+                display: none;
+                flex-basis: 100%;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+                padding: 10px 0 15px;
+            }
+
+            .menu.aberto {
+                display: flex;
+            }
+
+            .capa {
+                grid-template-columns: 1fr;
+                padding-top: 45px;
+            }
+
+            .capa-visual {
+                min-height: 310px;
+                margin: 10px;
+            }
+
+            .cartoes,
+            .galeria {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .lista-tecnologias,
+            .passos {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .secao {
+                padding: 55px 16px;
+            }
+
+            .capa {
+                padding: 45px 20px;
+            }
+
+            .capa-visual {
+                min-height: 260px;
+            }
+
+            .ilustracao-controle {
+                width: 140px;
+                height: 140px;
+                border-radius: 35px;
+                font-size: 70px;
+            }
+
+            .cartao-decorativo {
+                max-width: 205px;
+                padding: 10px;
+            }
+
+            .cartao-superior {
+                left: -5px;
+            }
+
+            .cartao-inferior {
+                right: -5px;
+            }
+
+            .cartoes,
+            .galeria {
+                grid-template-columns: 1fr;
+            }
+
+            .cartao,
+            .codigo-aula {
+                padding: 20px;
+            }
+
+            .caixa-informativa {
+                gap: 12px;
+                padding: 20px;
+            }
+
+            th,
+            td {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            pre {
+                padding: 17px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="cabecalho">
+        <a href="#inicio" class="logo">
+            <span class="logo-icone">🎮</span>
+            <span>Game<span class="logo-destaque">Zone</span></span>
+        </a>
+
+        <button class="menu-mobile" id="menuMobile"
+            aria-label="Abrir menu" aria-expanded="false">☰</button>
+
+        <nav class="menu" id="menu">
+            <a href="#inicio">Início</a>
+            <a href="#projeto">Projeto</a>
+            <a href="#tecnologias">Tecnologias</a>
+            <a href="#usuario">Como utilizar</a>
+            <a href="#tecnico">Manual técnico</a>
+            <a href="#banco-dados">Supabase</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="capa" id="inicio">
+            <div class="capa-conteudo">
+                <span class="etiqueta">MANUAL OFICIAL DO PROJETO</span>
+
+                <h1>Bem-vindo ao<br><span>Manual GameZone!</span></h1>
+
+                <p>
+                    Conheça o GameZone, descubra como utilizar suas funcionalidades
+                    e entenda as tecnologias e etapas envolvidas no desenvolvimento
+                    do aplicativo.
+                </p>
+
+                <div class="botoes-capa">
+                    <a href="#projeto" class="botao botao-principal">
+                        Conhecer o projeto →
+                    </a>
+                    <a href="#usuario" class="botao botao-secundario">
+                        Guia do usuário
+                    </a>
+                </div>
+
+                <div class="capa-informacoes">
+                    <div><strong>Flutter</strong><span>Framework</span></div>
+                    <div><strong>Dart</strong><span>Linguagem</span></div>
+                    <div><strong>GameZone</strong><span>Projeto mobile</span></div>
+                </div>
+            </div>
+
+            <div class="capa-visual">
+                <div class="cartao-decorativo cartao-superior">
+                    <span>💗</span>
+                    <div>
+                        <strong>Seu espaço gamer</strong>
+                        <p>Descubra novos jogos!</p>
+                    </div>
+                </div>
+
+                <div class="ilustracao-controle">🎮</div>
+
+                <div class="cartao-decorativo cartao-inferior">
+                    <span>⭐</span>
+                    <div>
+                        <strong>Explore e favorite</strong>
+                        <p>Seus jogos favoritos em um só lugar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="secao" id="projeto">
+            <div class="titulo-secao">
+                <span class="etiqueta">CONHEÇA O PROJETO</span>
+                <h2>O que é o <span>GameZone?</span></h2>
+                <p>
+                    Uma aplicação desenvolvida para reunir informações sobre jogos
+                    em uma interface organizada, intuitiva e agradável.
+                </p>
+            </div>
+
+            <div class="cartoes">
+                <article class="cartao">
+                    <div class="cartao-icone rosa">🎮</div>
+                    <h3>Catálogo de jogos</h3>
+                    <p>
+                        Permite explorar jogos e consultar informações como
+                        descrição, gênero, desenvolvedor e plataformas.
+                    </p>
+                </article>
+
+                <article class="cartao">
+                    <div class="cartao-icone roxo">🚀</div>
+                    <h3>Lançamentos</h3>
+                    <p>
+                        Apresenta uma seleção de jogos em uma área destinada
+                        aos lançamentos do aplicativo.
+                    </p>
+                </article>
+
+                <article class="cartao">
+                    <div class="cartao-icone rosa">💖</div>
+                    <h3>Favoritos</h3>
+                    <p>
+                        Oferece uma área para consultar os jogos marcados
+                        como favoritos durante o uso do aplicativo.
+                    </p>
+                </article>
+            </div>
+
+            <div class="caixa-informativa">
+                <span class="caixa-icone">💡</span>
+                <div>
+                    <h3>Objetivo do projeto</h3>
+                    <p>
+                        O GameZone tem como objetivo facilitar a descoberta e a
+                        consulta de informações sobre jogos por meio de uma
+                        interface simples e organizada.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="secao secao-colorida" id="tecnologias">
+            <div class="titulo-secao">
+                <span class="etiqueta">FERRAMENTAS UTILIZADAS</span>
+                <h2>Tecnologias do <span>GameZone</span></h2>
+                <p>
+                    Conheça as principais ferramentas utilizadas no desenvolvimento
+                    e na documentação do projeto.
+                </p>
+            </div>
+
+            <div class="lista-tecnologias">
+                <article class="tecnologia">
+                    <div class="tecnologia-icone">💙</div>
+                    <div>
+                        <h3>Flutter</h3>
+                        <p>
+                            Framework utilizado para desenvolver a interface
+                            do aplicativo e permitir sua execução em diferentes
+                            plataformas.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="tecnologia">
+                    <div class="tecnologia-icone">🎯</div>
+                    <div>
+                        <h3>Dart</h3>
+                        <p>
+                            Linguagem de programação utilizada para implementar
+                            a lógica, os componentes e as funcionalidades do aplicativo.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="tecnologia">
+                    <div class="tecnologia-icone">💻</div>
+                    <div>
+                        <h3>Visual Studio Code</h3>
+                        <p>
+                            Editor utilizado para criar e organizar os arquivos
+                            HTML, CSS e JavaScript deste manual.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="tecnologia">
+                    <div class="tecnologia-icone">🛠️</div>
+                    <div>
+                        <h3>Android Studio</h3>
+                        <p>
+                            Ambiente utilizado para trabalhar com o projeto Flutter,
+                            configurar ferramentas e executar testes.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="secao" id="usuario">
+            <div class="titulo-secao">
+                <span class="etiqueta">GUIA DO USUÁRIO</span>
+                <h2>Como utilizar o <span>GameZone</span></h2>
+                <p>
+                    Conheça as principais áreas do aplicativo e entenda
+                    a finalidade de cada uma delas.
+                </p>
+            </div>
+
+            <div class="passos">
+                <article class="passo">
+                    <div class="numero-passo">01</div>
+                    <div>
+                        <h3>Início</h3>
+                        <p>
+                            A tela inicial apresenta o conteúdo principal do GameZone
+                            e permite acessar as demais áreas do aplicativo.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="passo">
+                    <div class="numero-passo">02</div>
+                    <div>
+                        <h3>Explorar</h3>
+                        <p>
+                            Consulte o catálogo de jogos e visualize as informações
+                            disponíveis sobre cada título.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="passo">
+                    <div class="numero-passo">03</div>
+                    <div>
+                        <h3>Lançamentos</h3>
+                        <p>
+                            Acesse a seção de lançamentos para consultar
+                            os jogos apresentados nessa categoria.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="passo">
+                    <div class="numero-passo">04</div>
+                    <div>
+                        <h3>Favoritos</h3>
+                        <p>
+                            Marque os jogos desejados como favoritos e
+                            consulte-os na seção correspondente.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="passo">
+                    <div class="numero-passo">05</div>
+                    <div>
+                        <h3>Perfil</h3>
+                        <p>
+                            Acesse a área de perfil para visualizar as
+                            informações e opções disponibilizadas.
+                        </p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="aviso">
+                <strong>Importante:</strong>
+                <p>
+                    As instruções apresentam as funções gerais do aplicativo.
+                    Os detalhes devem corresponder à versão implementada no GameZone.
+                </p>
+            </div>
+        </section>
+
+        <section class="secao secao-colorida" id="tecnico">
+            <div class="titulo-secao">
+                <span class="etiqueta">DOCUMENTAÇÃO TÉCNICA</span>
+                <h2>Por dentro do <span>GameZone</span></h2>
+                <p>
+                    Entenda como o projeto está organizado e quais são
+                    as etapas para trabalhar com seu código.
+                </p>
+            </div>
+
+            <div class="cartoes">
+                <article class="cartao">
+                    <div class="cartao-icone rosa">📁</div>
+                    <h3>Estrutura do projeto</h3>
+                    <p>
+                        Organização dos diretórios, arquivos Dart, recursos
+                        visuais e configurações do aplicativo.
+                    </p>
+                </article>
+
+                <article class="cartao">
+                    <div class="cartao-icone roxo">⚙️</div>
+                    <h3>Desenvolvimento</h3>
+                    <p>
+                        Explicação dos componentes, modelos de dados,
+                        navegação e funcionalidades.
+                    </p>
+                </article>
+
+                <article class="cartao">
+                    <div class="cartao-icone rosa">▶️</div>
+                    <h3>Execução</h3>
+                    <p>
+                        Orientações para preparar o ambiente, instalar
+                        dependências e executar o projeto Flutter.
+                    </p>
+                </article>
+            </div>
+
+            <div class="bloco-codigo">
+                <div class="codigo-cabecalho">
+                    <div class="bolinhas"><span></span><span></span><span></span></div>
+                    <span>Estrutura ilustrativa do GameZone</span>
+                </div>
+                <pre><code>gamezone/
+├── lib/
+│   ├── main.dart
+│   └── game.dart
+├── assets/
+│   └── images/
+├── android/
+├── web/
+├── pubspec.yaml
+└── README.md</code></pre>
+                <p>
+                    A estrutura acima é ilustrativa. Os diretórios e arquivos
+                    podem variar conforme a organização atual do projeto.
+                </p>
+            </div>
+        </section>
+
+        <section class="secao secao-colorida" id="galeria">
+            <div class="titulo-secao">
+                <span class="etiqueta">REGISTRO VISUAL</span>
+                <h2>Telas do <span>GameZone</span></h2>
+                <p>
+                    Espaço reservado para apresentar capturas de tela reais
+                    do aplicativo desenvolvido.
+                </p>
+            </div>
+
+            <div class="galeria">
+                <article class="imagem-cartao">
+                    <div class="imagem-reservada">🎮</div>
+                    <h3>Tela inicial</h3>
+                    <p>Apresentação principal do aplicativo.</p>
+                </article>
+
+                <article class="imagem-cartao">
+                    <div class="imagem-reservada">🔎</div>
+                    <h3>Explorar jogos</h3>
+                    <p>Catálogo e consulta de jogos.</p>
+                </article>
+
+                <article class="imagem-cartao">
+                    <div class="imagem-reservada">⭐</div>
+                    <h3>Favoritos</h3>
+                    <p>Área destinada aos jogos favoritos.</p>
+                </article>
+            </div>
+
+            <p class="observacao">
+                Os cartões acima são espaços provisórios. Depois, substitua-os
+                por capturas de tela reais do seu aplicativo.
+            </p>
+        </section>
+
+        <!-- BANCO DE DADOS: SUPABASE -->
+        <section class="secao" id="banco-dados">
+            <div class="titulo-secao">
+                <span class="etiqueta">ARMAZENAMENTO DE DADOS</span>
+                <h2>Banco de dados com <span>Supabase</span></h2>
+                <p>
+                    Aprenda a utilizar o Supabase para armazenar e consultar
+                    as informações dos jogos do GameZone. O catálogo poderá
+                    ser consultado sem exigir login dos usuários.
+                </p>
+            </div>
+
+            <div class="caixa-informativa">
+                <span class="caixa-icone">💡</span>
+                <div>
+                    <h3>Importante</h3>
+                    <p>
+                        Esta documentação apresenta uma proposta de integração.
+                        Para funcionar, o banco precisa ser criado e conectado
+                        ao projeto Flutter. O catálogo pode ser público sem
+                        exigir cadastro ou confirmação de e-mail no aplicativo,
+                        desde que as permissões sejam configuradas corretamente.
+                    </p>
+                </div>
+            </div>
+
+            <article class="codigo-aula">
+                <div class="codigo-aula-topo">
+                    <span class="codigo-numero">01</span>
+                    <div>
+                        <h3>Entenda o Supabase</h3>
+                        <p>Organização das informações</p>
+                    </div>
+                </div>
+
+                <p>
+                    O Supabase oferece um banco de dados PostgreSQL na nuvem.
+                    No GameZone, ele poderá guardar nome, gênero, descrição,
+                    desenvolvedor, plataformas e nota dos jogos.
+                </p>
+
+                <p>Uma tabela inicial poderá utilizar esta estrutura:</p>
+
+                <div class="tabela-responsiva">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Tipo</th>
+                                <th>Finalidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>id</td><td>bigint</td><td>Identificador do jogo</td></tr>
+                            <tr><td>name</td><td>text</td><td>Nome do jogo</td></tr>
+                            <tr><td>genre</td><td>text</td><td>Gênero do jogo</td></tr>
+                            <tr><td>description</td><td>text</td><td>Descrição</td></tr>
+                            <tr><td>developer</td><td>text</td><td>Desenvolvedor</td></tr>
+                            <tr><td>platforms</td><td>text</td><td>Plataformas compatíveis</td></tr>
+                            <tr><td>rating</td><td>numeric</td><td>Nota do jogo</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </article>
+
+            <article class="codigo-aula">
+                <div class="codigo-aula-topo">
+                    <span class="codigo-numero">02</span>
+                    <div>
+                        <h3>Crie o projeto no Supabase</h3>
+                        <p>Configuração inicial</p>
+                    </div>
+                </div>
+
+                <ol>
+                    <li>
+                        Acesse o
+                        <a href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer">
+                            painel do Supabase
+                        </a>.
+                    </li>
+                    <li>Entre na sua conta e crie um projeto.</li>
+                    <li>Escolha um nome para o projeto GameZone.</li>
+                    <li>Configure a senha do banco e a região.</li>
+                    <li>Aguarde a criação do banco.</li>
+                    <li>Abra o SQL Editor para executar o próximo código.</li>
+                </ol>
+            </article>
+
+            <article class="codigo-aula">
+                <div class="codigo-aula-topo">
+                    <span class="codigo-numero">03</span>
+                    <div>
+                        <h3>Crie a tabela de jogos</h3>
+                        <p>SQL Editor</p>
+                    </div>
+                </div>
+
+                <p>
+                    Execute o SQL abaixo para criar a tabela e permitir a
+                    leitura pública do catálogo. A política não permite
+                    inserir, editar ou excluir registros publicamente.
+                </p>
+
+                <pre><code>create table public.games (
+    id bigint generated by default as identity primary key,
+    name text not null,
+    genre text,
+    description text,
+    developer text,
+    platforms text,
+    release_date text,
+    image_url text,
+    website_url text,
+    rating numeric default 0
+);
+
+alter table public.games enable row level security;
+
+grant select on public.games to anon;
+
+create policy "Permitir leitura publica dos jogos"
+on public.games
+for select
+to anon
+using (true);</code></pre>
+
+                <p class="codigo-explicacao">
+                    <strong>Atenção:</strong> não exponha a chave secreta
+                    ou a chave <code>service_role</code> no aplicativo.
+                    Mantenha a proteção RLS ativa.
+                </p>
+            </article>
+
+            <article class="codigo-aula">
+                <div class="codigo-aula-topo">
+                    <span class="codigo-numero">04</span>
+                    <div>
+                        <h3>Adicione um jogo de exemplo</h3>
+                        <p>Inserindo informações no banco</p>
+                    </div>
+                </div>
+
+                <p>Execute este comando no SQL Editor:</p>
+
+                <pre><code>insert into public.games (
+    name,
+    genre,
+    description,
+    developer,
+    platforms,
+    rating
+)
+values (
+    'Project Makeover',
+    'Moda e beleza',
+    'Um jogo de transformação e estilo.',
+    'Magic Tavern',
+    'Android e iOS',
+    4.7
+);</code></pre>
+
+                <p>Cadastre os outros jogos seguindo o mesmo formato.</p>
+            </article>
+
+            <article class="codigo-aula">
+                <div class="codigo-aula-topo">
+                    <span class="codigo-numero">05</span>
+                    <div>
+                        <h3>Obtenha as credenciais</h3>
+                        <p>Conectando o aplicativo</p>
+                    </div>
+                </div>
+
+                <ol>
+                    <li>Abra as configurações do projeto no Supabase.</li>
+                    <li>Localize a URL do projeto e a chave publicável.</li>
+                    <li>Guarde as informações para configurar o Flutter.</li>
+                </ol>
+
+                <p class="codigo-explicacao">
+                    Use somente a chave pública apropriada para o cliente.
+                    A segurança deve ser garantida pelas políticas RLS.
+                </p>
+            </article>
+
+            <article class="codigo-aula">
+                <div class="codigo-aula-topo">
+                    <span class="codigo-numero">06</span>
+                    <div>
+                        <h3>Instale a biblioteca do Supabase</h3>
+                        <p>Terminal do Flutter</p>
+                    </div>
+                </div>
+
+                <p>Com o projeto aberto no Android Studio, execute:</p>
+
+                <div class="comando-linha">
+                    <code>flutter pub add supabase_flutter</code>
+                </div>
+            </article>
+
+            <article class="codigo-aula">
+                <div class="codigo-aula-topo">
+                    <span class="codigo-numero">07</span>
+                    <div>
+                        <h3>Configure a conexão no Flutter</h3>
+                        <p>Arquivo: main.dart</p>
+                    </div>
+                </div>
+
+                <p>
+                    Inicialize o Supabase antes de executar o aplicativo.
+                    Substitua os valores de exemplo pelas credenciais do projeto.
+                </p>
+
+                <pre><code>import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+Future&lt;void&gt; main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: 'SUA_URL_DO_SUPABASE',
+    publishableKey: 'SUA_CHAVE_PUBLICA',
+  );
+
+  runApp(const GameZoneApp());
+}</code></pre>
+
+                <p class="codigo-explicacao">
+                    Adapte o trecho ao <code>main.dart</code> existente.
+                    Preserve o restante do aplicativo e não crie uma
+                    segunda função <code>main()</code>.
+                </p>
+            </article>
+
+            <article class="codigo-aula">
+                <div class="codigo-aula-topo">
+                    <span class="codigo-numero">08</span>
+                    <div>
+                        <h3>Consulte os jogos cadastrados</h3>
+                        <p>Exemplo de consulta</p>
+                    </div>
+                </div>
+
+                <pre><code>final jogos = await Supabase.instance.client
+    .from('games')
+    .select();
+
+print(jogos);</code></pre>
+
+                <p>
+                    A consulta retorna os dados. Para exibi-los no catálogo,
+                    converta os registros para o modelo usado pelo GameZone.
+                </p>
+            </article>
+
+            <article class="codigo-aula">
+                <div class="codigo-aula-topo">
+                    <span class="codigo-numero">09</span>
+                    <div>
+                        <h3>Teste a integração</h3>
+                        <p>Verificando o funcionamento</p>
+                    </div>
+                </div>
+
+                <ul>
+                    <li>Execute o aplicativo Flutter.</li>
+                    <li>Confira se a consulta retorna os jogos cadastrados.</li>
+                    <li>Verifique se os erros de conexão são tratados.</li>
+                    <li>Teste o catálogo sem login.</li>
+                    <li>Confirme que a escrita não está liberada publicamente.</li>
+                </ul>
+            </article>
+
+            <article class="codigo-aula">
+                <div class="codigo-aula-topo">
+                    <span class="codigo-numero">10</span>
+                    <div>
+                        <h3>Boas práticas de segurança</h3>
+                        <p>Organização e manutenção</p>
+                    </div>
+                </div>
+
+                <ul>
+                    <li>Mantenha a proteção RLS ativada.</li>
+                    <li>Libere apenas as operações necessárias.</li>
+                    <li>Não coloque chaves secretas no código do aplicativo.</li>
+                    <li>Trate falhas de rede e resultados vazios.</li>
+                    <li>Teste as permissões antes de publicar o aplicativo.</li>
+                </ul>
+            </article>
+
+            <div class="caixa-informativa">
+                <span class="caixa-icone">📚</span>
+                <div>
+                    <h3>Documentação oficial</h3>
+                    <ul>
+                        <li>
+                            <a href="https://supabase.com/docs" target="_blank" rel="noopener noreferrer">
+                                Documentação do Supabase
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://supabase.com/docs/guides/getting-started/quickstarts/flutter"
+                                target="_blank" rel="noopener noreferrer">
+                                Guia de integração com Flutter
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://supabase.com/docs/guides/database/postgres/row-level-security"
+                                target="_blank" rel="noopener noreferrer">
+                                Segurança e políticas RLS
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <a href="#inicio" class="logo">
+            <span class="logo-icone">🎮</span>
+            <span>Game<span class="logo-destaque">Zone</span></span>
+        </a>
+
+        <p>Manual técnico e guia do usuário.</p>
+        <p class="rodape-final">Projeto acadêmico • GameZone</p>
+    </footer>
+
+    <script>
+        const botaoMenu = document.getElementById("menuMobile");
+        const menu = document.getElementById("menu");
+
+        botaoMenu.addEventListener("click", function () {
+            const aberto = menu.classList.toggle("aberto");
+
+            botaoMenu.setAttribute("aria-expanded", String(aberto));
+            botaoMenu.setAttribute(
+                "aria-label",
+                aberto ? "Fechar menu" : "Abrir menu"
+            );
+
+            botaoMenu.textContent = aberto ? "✕" : "☰";
+        });
+
+        menu.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                menu.classList.remove("aberto");
+                botaoMenu.setAttribute("aria-expanded", "false");
+                botaoMenu.setAttribute("aria-label", "Abrir menu");
+                botaoMenu.textContent = "☰";
+            });
+        });
+    </script>
+
+</body>
+</html>
